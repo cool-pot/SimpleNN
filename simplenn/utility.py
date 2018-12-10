@@ -19,7 +19,7 @@ def timer(func):
         res = func(*arg, **kw)
         t2 = time.time()
         print('🕒 [%s] Finish: %s' % (func_name, '{0:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())))
-        print('🕒 [%s] Finish in %.5f seconds' % (func_name, t2-t1))
+        print('✅ [%s] Finish in %.5f seconds' % (func_name, t2-t1))
         return res
     return wrapper
 

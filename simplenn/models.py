@@ -75,7 +75,7 @@ class MLPBinaryClassifier:
                 a = self.predict_proba(X)
                 train_loss = np.sum(-y * np.log(a) - (1 - y) * np.log(1 - a)) / num_instances
                 if self.verbose:
-                    print("Epoch ", epoch, ": Ave objective=", epoch_obj_tot / num_instances, " Ave training loss: ",
+                    print("Epoch ", epoch, ": Ave objective=", epoch_obj_tot / num_instances, " Ave training loss= ",
                           train_loss)
                 if self.early_stop and last_train_loss is not None and \
                         np.abs(train_loss-last_train_loss) < self.tolerance:

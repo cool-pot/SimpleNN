@@ -18,12 +18,18 @@ import simplenn.utility as utility
 
 try:
     get_ipython
+    print("------------- 📧 Message from SimpleNN -------------")
     print("🤖 IPython detected")
     print("😎 SimpleNN successfully imported. Have fun.")
+    print("⭐ Source Code: https://github.com/cool-pot/SimpleNN")
+    print("----------------------------------------------------")
 
 except Exception:
-    print("🤖 Shell detected")
+    print("------------- 📧 Message from SimpleNN -------------")
+    print("🤖 IPython detected")
     print("😎 SimpleNN successfully imported. Have fun.")
+    print("⭐ Source Code: https://github.com/cool-pot/SimpleNN")
+    print("----------------------------------------------------")
 
 
 # module level doc-string

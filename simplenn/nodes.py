@@ -265,11 +265,8 @@ class SigmoidNode:
         self.a = a
 
     def forward(self):
-        # print("---")
-        # print("debug message, input in SigmoidNode: a", self.a.out)
         self.out = 1 / (1 + np.exp(-self.a.out))
         self.d_out = np.zeros(self.out.shape)
-        # print("debug message, output in SigmoidNode:", self.out)
         return self.out
 
     def backward(self):
@@ -299,12 +296,8 @@ class BinaryCrossEntropyLossNode:
         self.y = y
 
     def forward(self):
-        # print("---")
-        # print("debug message, input in BinaryCrossEntropyLossNode: a", self.a.out)
-        # print("debug message, input in BinaryCrossEntropyLossNode: y", self.y.out)
         self.out = -self.y.out * np.log(self.a.out) - (1 - self.y.out) * np.log(1 - self.a.out)
         self.d_out = np.zeros(self.out.shape)
-        # print("debug message, output in BinaryCrossEntropyLossNode:", self.out)
         return self.out
 
     def backward(self):
@@ -314,3 +307,31 @@ class BinaryCrossEntropyLossNode:
 
     def get_predecessors(self):
         return [self.a, self.y]
+
+class ReluNode:
+    """Node relu(a), where relu is applied element-wise to the array a
+    """
+
+    def __init__(self, a, node_name):
+        """
+        Parameters:
+        a: node for which a.out is a numpy array
+        """
+        self.node_name = node_name
+        self.out = None
+        self.d_out = None
+        self.a = a
+
+    def forward(self):
+        self.out = self.a.out * (self.a.out > 0)
+        self.d_out = np.zeros(self.out.shape)
+        return self.out
+
+    def backward(self):
+        d_a = self.d_out * (self.out > 0)
+        self.a.d_out += d_a
+        return self.d_out
+
+    def get_predecessors(self):
+        return [self.a]
+

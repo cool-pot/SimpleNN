@@ -17,7 +17,7 @@ class MLPBinaryClassifier:
     Using tanh as a hidden layer activation function.
     """
     def __init__(self, num_hidden_units=10, step_size=.005, init_param_scale=0.01, max_num_epochs=500,
-                 tolerance=0.000001, early_stop=False, verbose=False):
+                 tolerance=0.000001, early_stop=False, verbose=False, activation="relu"):
         self.num_hidden_units = num_hidden_units
         self.init_param_scale = init_param_scale
         self.max_num_epochs = max_num_epochs
@@ -25,14 +25,17 @@ class MLPBinaryClassifier:
         self.tolerance = tolerance
         self.early_stop = early_stop
         self.verbose = verbose
-
+        self.activation = activation
+        
         # Build computation graph
         self.x = nodes.ValueNode(node_name="x")  # to hold a vector input
         self.y = nodes.ValueNode(node_name="y")  # to hold a scalar response
         self.W1 = nodes.ValueNode(node_name="W1")  # to hold the parameter matrix
         self.b1 = nodes.ValueNode(node_name="b1")  # to hold the parameter vector
         self.L = nodes.AffineNode(self.W1, self.x, self.b1, node_name="L")
-        self.h = nodes.TanhNode(self.L, node_name="h")
+        if self.activation == "tanh": self.h = nodes.TanhNode(self.L, node_name="h")
+        elif self.activation == "relu": self.h = nodes.ReluNode(self.L, node_name ="h")
+        else: raise ValueError("Un-supported Activation Type")
         self.W2 = nodes.ValueNode(node_name="W2")  # to hold the parameter vector
         self.b2 = nodes.ValueNode(node_name="b2")  # to hold the parameter scalar
         self.a = nodes.VectorScalarAffineNode(self.W2, self.h, self.b2, node_name="a")
@@ -79,7 +82,8 @@ class MLPBinaryClassifier:
                           train_loss)
                 if self.early_stop and last_train_loss is not None and \
                         np.abs(train_loss-last_train_loss) < self.tolerance:
-                    break
+                     print("☺️  early_stop triggered! Training stops due to this model already meet the expectation.")
+                     break
                 last_train_loss = train_loss
 
     def predict_proba(self, X):

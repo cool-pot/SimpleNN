@@ -14,7 +14,6 @@ from simplenn.utility import timer
 class MLPBinaryClassifier:
     """
     Two-layer perceptron binary classifier.
-    Using tanh as a hidden layer activation function.
     """
     def __init__(self, num_hidden_units=10, step_size=.005, init_param_scale=0.01, max_num_epochs=500,
                  tolerance=0.000001, early_stop=False, verbose=False, activation="relu"):

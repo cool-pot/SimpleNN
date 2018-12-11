@@ -26,7 +26,7 @@ try:
 
 except Exception:
     print("------------- 📧 Message from SimpleNN -------------")
-    print("🤖 IPython detected")
+    print("🤖 Shell detected")
     print("😎 SimpleNN successfully imported. Have fun.")
     print("⭐ Source Code: https://github.com/cool-pot/SimpleNN")
     print("----------------------------------------------------")
